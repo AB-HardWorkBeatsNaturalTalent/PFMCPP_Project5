@@ -228,6 +228,7 @@ struct ToneControl
         float lowerLimit = 0.0f;
 
         ToneAlgorithm();
+        ~ToneAlgorithm();
         //1 set tone colors
         void setToneColors(int color1, int color2, int color3);//input each color to set
         //2 set upper limit
@@ -275,6 +276,12 @@ ToneControl::ToneAlgorithm::ToneAlgorithm()
 {
     std::cout << "ToneAlgorithm constructing" << std::endl;
 }
+ToneControl::ToneAlgorithm::~ToneAlgorithm()
+{
+    std::cout << "ToneAlgorithm destructing" << std::endl;
+}
+
+
 void ToneControl::ToneAlgorithm::setToneColors(int c1, int c2, int c3)
 {
     std::cout << "tone color set to " << c1 << ", " << c2 << ", " << c3 << std::endl;
@@ -311,21 +318,92 @@ bool ToneControl::autoAdjust()
     return true;
 }
 /*
- new UDT 4:
+ new UDT 4: MusicMachine
  with 2 member functions
  */
-struct BerryBush
+struct MusicMachine
 {
     Computer computer = Computer();
-    Teacher teacher = Teacher();
+    ToneControl toneControl = ToneControl();
 
-    BerryBush();
+    MusicMachine();
+    ~MusicMachine();
+
+    void powerOnComputer(Computer computer1);
+    void adjustToneControl(ToneControl toneControl1);
+    void powerOffComputer(Computer computer1);
+    void endComputing();
 };
+
+MusicMachine::MusicMachine()
+{
+    std::cout << "MusicMachine constructed" << std::endl;
+}
+MusicMachine::~MusicMachine()
+{
+    std::cout << "ending computing" << std::endl;
+    this->endComputing();
+    std::cout << "MusicMachine destructed " << std::endl;
+}
+void MusicMachine::powerOnComputer(Computer comp)
+{
+    comp.runMemtest();
+    std::cout << "powering on" << std::endl;
+}
+void MusicMachine::adjustToneControl(ToneControl toneControl1)
+{
+    toneControl1.autoAdjust();
+}
+void MusicMachine::powerOffComputer(Computer computer11)
+{    
+    computer11.updateGraphicsDriver(computer11.graphicsAccelerator);
+    std::cout << "updating graphics and powering off" << std::endl;
+}
+void MusicMachine::endComputing()
+{
+    std::cout << "computing has ended" << std::endl;
+}
 
 /*
  new UDT 5:
  with 2 member functions
  */
+struct Classroom
+{
+    Teacher teacher;
+
+    Classroom();
+    ~Classroom();
+
+    void hireTeacher(Teacher teach);
+    void fireTeacher();
+    void chooseClassPresident(std::string nameOfPresident);
+};
+
+Classroom::Classroom()
+{
+    std::cout << " Constructing Classroom " << std::endl;
+}
+Classroom::~Classroom()
+{   
+    std::cout << "before the classroom is gone, it will elect a new class president " << std::endl;
+    chooseClassPresident("billy");
+    std::cout << "Classroom destructed" << std::endl;
+}
+void Classroom::hireTeacher(Teacher teacherToHire)
+{
+    teacherToHire.giveLecture();
+    std::cout << "Welcome aboard" << std::endl;
+}
+void Classroom::fireTeacher()
+{
+    std::cout << "you're outta here!" << std::endl;
+}
+void Classroom::chooseClassPresident(std::string nameOfPresident)
+{
+    std::cout << "the new president is: " << nameOfPresident << std::endl;
+}
+
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
