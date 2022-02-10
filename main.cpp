@@ -455,6 +455,18 @@ int main()
     toneAlgorithm.setToneColors(1, 2, 3);
     std::cout << "lower limit set to:" << toneAlgorithm.setLowerLimit(.02f) << std::endl;
 
-    std::cout << "good to go!" << std::endl;
+//MusicMachine methods
+    auto musicMachine = MusicMachine();
+    musicMachine.powerOnComputer(computer);
+    musicMachine.adjustToneControl(toneControl);
+    musicMachine.powerOffComputer(computer);
+    musicMachine.endComputing(computer);
+
+//Classroom methods
+    auto classroom = Classroom();
+    classroom.hireTeacher(teacher);
+    classroom.fireTeacher();
+    classroom.chooseClassPresident("juanita");
+
     std::cout << "good to go!" << std::endl;
 }
