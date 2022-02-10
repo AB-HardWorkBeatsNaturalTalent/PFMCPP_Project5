@@ -332,7 +332,7 @@ struct MusicMachine
     void powerOnComputer(Computer computer1);
     void adjustToneControl(ToneControl toneControl1);
     void powerOffComputer(Computer computer1);
-    void endComputing();
+    void endComputing(Computer computer);
 };
 
 MusicMachine::MusicMachine()
@@ -342,7 +342,7 @@ MusicMachine::MusicMachine()
 MusicMachine::~MusicMachine()
 {
     std::cout << "ending computing" << std::endl;
-    this->endComputing();
+    this->endComputing(this->computer);
     std::cout << "MusicMachine destructed " << std::endl;
 }
 void MusicMachine::powerOnComputer(Computer comp)
@@ -359,9 +359,10 @@ void MusicMachine::powerOffComputer(Computer computer11)
     computer11.updateGraphicsDriver(computer11.graphicsAccelerator);
     std::cout << "updating graphics and powering off" << std::endl;
 }
-void MusicMachine::endComputing()
+void MusicMachine::endComputing(Computer computerA)
 {
-    std::cout << "computing has ended" << std::endl;
+    computerA.runMultipleProcesses();
+    std::cout << "computing has ended on computer with" << computerA.motherboardType << " and " << computerA.memoryInGB << "GB of RAM" << std::endl;
 }
 
 /*
@@ -422,5 +423,38 @@ void Classroom::chooseClassPresident(std::string nameOfPresident)
 #include <iostream>
 int main()
 {
+//GraphicsAccelerator methods
+    auto computerGraphicsAccelerator = Computer::GraphicsAccelerator();
+    computerGraphicsAccelerator.outputCUDAVersionAndCores();
+    computerGraphicsAccelerator.accelerateGraphics();
+    computerGraphicsAccelerator.setPrice(400.0f);
+
+    std::cout << "cuda info: " << computerGraphicsAccelerator.outputCUDAVersionAndCores() << std::endl;
+
+//Computer methods
+    auto computer = Computer();
+    std::cout << "updated graphics: " << computer.updateGraphicsDriver(computerGraphicsAccelerator) << std::endl;
+    computer.runMemtest();
+    computer.runMultipleProcesses();
+
+//Teacher methods
+    auto teacher = Teacher();
+    teacher.assignHomework("lesson 2");
+    teacher.giveLecture();    
+    std::cout << "money made: " << teacher.privateTutoring(50.00f) << std::endl;
+
+//ToneControl methods
+    auto toneControl = ToneControl();  
+    toneControl.setToneLevel(3.9f, 2.0f);
+    toneControl.requireRepair();
+    std::cout << "auto adjusted tone: "  << toneControl.autoAdjust() << std::endl;
+
+//ToneAlgorithm methods
+    auto toneAlgorithm = ToneControl::ToneAlgorithm();
+    toneAlgorithm.setUpperLimit(1.09f);
+    toneAlgorithm.setToneColors(1, 2, 3);
+    std::cout << "lower limit set to:" << toneAlgorithm.setLowerLimit(.02f) << std::endl;
+
+    std::cout << "good to go!" << std::endl;
     std::cout << "good to go!" << std::endl;
 }
