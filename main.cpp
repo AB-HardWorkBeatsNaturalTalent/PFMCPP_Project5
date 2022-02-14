@@ -74,16 +74,20 @@ write 3 UDTs below that EACH have:
 /*
  copied UDT 1:Compputer
  */
+
+/*
+Thing 1) Computer
+ */
 struct Computer
 { 
     struct GraphicsAccelerator
     {
+        //is gsync capable
+        bool isGSyncCapable;
         //number of cuda cores
-        int numberOfCUDACores = 1200;
+        int numberOfCUDACores;
         //model name 
         std::string modelName = "default GPU";
-        //is gsync capable
-        bool isGSyncCapable = true;
         //price
         float price = 100.00f;
         //maximum SLI capability
@@ -97,18 +101,22 @@ struct Computer
         bool setPrice(float newPrice = 100.0f);
         //output cuda version and number of cores
         std::string outputCUDAVersionAndCores();//returns a string representing the cuda capbility 
+
+        void boostTheGraphics(int toMultiply);
+        int parallelSpeedIncreaseFactor(int desiredFactor);
+        
     };
 
     //1) number of processor cores (int)
-    int numberOfProcessorCores  = 4;
+    int numberOfProcessorCores;
     //2) memory In GB (int)
-    int memoryInGB = 16;
+    int memoryInGB;
     //3) graphics accelerator (std::string)
     GraphicsAccelerator graphicsAccelerator;
     //4) motherboard type (std::string)
-    std::string motherboardType = "ATX";
+    std::string motherboardType;
     //5) audio interface name (std::string)
-    std::string audioInterfaceName = "Apogee";
+    std::string audioInterfaceName;
 
     Computer();
     ~Computer();
@@ -122,22 +130,17 @@ struct Computer
     //input the graphics accelerator to update drivers for
     //returns true if driver updated successfully;
 
+    double analyzeEnergyConsumption(int numberOfSecondsPoweredOn);
+    std::string memoryTopologyBlocksPerCore();
+
 };
-Computer::~Computer()
+Computer::Computer() : numberOfProcessorCores(5), memoryInGB(32), motherboardType("micro ATX"), audioInterfaceName("ableton")
 {
-    std::cout <<"Computer destructor" << std::endl;
+    std::cout << "Computer being constructed" << std::endl; 
 }
-Computer::GraphicsAccelerator::~GraphicsAccelerator()
+Computer::GraphicsAccelerator::GraphicsAccelerator() : isGSyncCapable(true), numberOfCUDACores(1200)
 {
-    std::cout <<"GraphicsAccelerator destructor" << std::endl;
-}
-Computer::Computer()
-{
-    std::cout <<"Computer being constructed" << std::endl;
-}
-Computer::GraphicsAccelerator::GraphicsAccelerator()
-{
-    std::cout <<"GraphicsAccelerator being constructed "<< std::endl;
+    std::cout << "GraphicsAccelerator being constructed" << std::endl;
 }
 void Computer::GraphicsAccelerator::accelerateGraphics()
 {
@@ -157,14 +160,88 @@ void Computer::runMultipleProcesses()
     //imagine running in parallel
 }
 void Computer::runMemtest()
-{
-    std::cout << "memtest running" << std::endl;
+{    
+    std::cout << "memtest running on " << memoryInGB << "GB" << std::endl;
 }
 bool Computer::updateGraphicsDriver(GraphicsAccelerator gA)
 {
     std::string throwAway = gA.outputCUDAVersionAndCores();  
     return true;
 }
+
+Computer::~Computer()
+{
+    std::cout <<"Computer destructor" << std::endl;
+}
+Computer::GraphicsAccelerator::~GraphicsAccelerator()
+{
+    std::cout <<"GraphicsAccelerator destructor" << std::endl;
+}
+void Computer::GraphicsAccelerator::boostTheGraphics(int multiply)
+{
+    if(multiply >0)
+    {
+        int testValue = 0;
+        while(multiply > 0)
+        {
+            ++testValue;
+            std::cout << "Boosted!" << std::endl;
+            --multiply;
+        }
+        std::cout << "Out of Boost" << std::endl;
+    }
+    else
+    {
+        std::cout << "zero or negative boost only" << std::endl;
+    }
+} // part 5 begin.
+
+int Computer::GraphicsAccelerator::parallelSpeedIncreaseFactor(int desiredFactor)
+{
+    int totalCoresProcessing = 0;
+    for(int i = 0; i <= maxSLICapability; ++i)
+    {
+        std::cout << "boosted processor core block i: " << i*desiredFactor << std::endl;
+        totalCoresProcessing += i*desiredFactor;
+        if(i == 6) break;
+    }
+    std::cout << "more money more problems solved" << std::endl;
+    return totalCoresProcessing;
+}
+
+double Computer::analyzeEnergyConsumption(int numberOfSecondsPoweredOn)
+{
+    double consumed = numberOfSecondsPoweredOn * memoryInGB * .0345;
+    if(graphicsAccelerator.isGSyncCapable)
+    {
+        consumed *= 4;
+    }
+    std::cout << "for the sake of science; energy consumed: " << consumed << std::endl;
+    return consumed;
+
+}
+
+std::string Computer::memoryTopologyBlocksPerCore()
+{
+    //number of cores & number of GB RAM
+    int memoryPerCore = memoryInGB / numberOfProcessorCores;
+    
+    std::string memoryTopology = "";        
+    while(numberOfProcessorCores > 0)
+    {
+        for(int i = 0; i <= memoryPerCore; ++i)
+        {
+            memoryTopology += "block: ";
+            memoryTopology += std::to_string(i);
+            memoryTopology += "core :";
+            memoryTopology += std::to_string(numberOfProcessorCores);
+            memoryTopology += "\n"; 
+        }
+        --numberOfProcessorCores;
+    }
+    return memoryTopology;
+}
+
 /*
  copied UDT 2: Teacher
  */
@@ -174,7 +251,7 @@ struct Teacher
     //1) credential type (std::string)
     std::string credentialType = "no credential";
     //2) domain expertise (std::string)
-    std::string domainExpertise= "philosophy";
+    std::string domainExpertise;
     //3) number of classes taught (int)
     int numberOfClassesTaught = 6;
     //4) years of tenure (float)
@@ -183,23 +260,29 @@ struct Teacher
     char ratingByStudents  = 'A';
 
     Teacher();
+    ~Teacher();
     //1) give lecture
     void giveLecture();
-
     //2) private tutoring
     // returns the amount of money made from private tutoring
     float privateTutoring(float hourlyRate, int numberOfHours = 1); //input hourly rate and number of hours
     //3) assign homework
     void assignHomework(std::string homeworkAssignment);//input a string representation of the homework
+
+    void sayMeaninglessNumbers(int startingWith);
 };
 
-Teacher::Teacher()
+Teacher::Teacher() : domainExpertise("philosophy")
 {
     std::cout << "Teacher being constructed" << std::endl;
 }
+Teacher::~Teacher()
+{
+    std::cout << "Teacher destructing" << std::endl;
+}
 void Teacher::giveLecture()
 {
-
+    std::cout << "class of " << domainExpertise <<std::endl;
 }
 float Teacher::privateTutoring(float hourlyRate, int numberOfHours)
 {
@@ -209,6 +292,23 @@ void Teacher::assignHomework(std::string homeworkAssignment)
 {
     std::cout << homeworkAssignment << " assigned to class" << std::endl;
 }
+void Teacher::sayMeaninglessNumbers(int startingWith)
+{
+    if(startingWith > 0)
+    {        
+        int numberOfStuff = numberOfClassesTaught * startingWith;
+        std::cout << "I have taught " << numberOfStuff << "things" << std::endl;
+        std::cout << "that is " ;
+        while(startingWith > 0)
+        {
+            --startingWith;
+            std::cout << "so interesting: " << startingWith << std::endl;
+        }
+        std::cout << std::endl;
+        return;
+    }
+    std::cout << "i have only taught 1 thing" << std::endl;        
+}
 /*
  copied UDT 3: ToneControl
  */
@@ -217,11 +317,11 @@ struct ToneControl
     struct ToneAlgorithm
     {
         //1 tone color 1
-        int color1 = 10;
+        int color1;
         //2 tone color 2
-        int color2 = 12;
+        int color2;
         //3 tone color 3
-        int color3 = 14;
+        int color3;
         //4 upper Limit
         float upperLimit = 1.0f;
         //5 lower Limit
@@ -237,9 +337,12 @@ struct ToneControl
         //3 set lower limit
         bool setLowerLimit(float lowerLimit = 0.0f);
         //return true if success, else false;
+        
+        int toIncrement = 0;
+
+        void incrementAndSetColors(int color11, int color22, int color33);
     };
-
-
+    
 
     //1) front pickup tone control setting (float)
     float frontPickupToneControlSetting = 1.0f;
@@ -252,35 +355,33 @@ struct ToneControl
     //5) is smooth to turn (bool)
     bool isSmoothToTurn = true;
 
+    ToneAlgorithm toneAlgorithms;
+    char toneAlgoType = 'A';
+
+    void changeToneAlgorithm();
+
+
     ToneControl();
     ~ToneControl();
     //1) set tone level
-    float setToneLevel(float inputLevel, float adjustment); //apply adjustment to the inputlevel
-    //return the adjusted tone level
-
+    float setToneLevel(float inputLevel, float adjustment); //apply adjustment to the inputlevel and return the adjusted tone level
     //2) require repair
     bool requireRepair();//returns true if the tone control requires repair
     //3) auto adjust
     bool autoAdjust();//returns true if autoAdjust is turned on; else false 
 
+    void useToneAlgorithm();
 };
-ToneControl::~ToneControl()
-{
-    std::cout <<"ToneControl destructor" << std::endl;
-}
-ToneControl::ToneControl()
+
+ToneControl::ToneControl() 
 {
     std::cout << "ToneControl being constructed" << std::endl;
 }
-ToneControl::ToneAlgorithm::ToneAlgorithm()
-{
-    std::cout << "ToneAlgorithm constructing" << std::endl;
-}
-ToneControl::ToneAlgorithm::~ToneAlgorithm()
-{
-    std::cout << "ToneAlgorithm destructing" << std::endl;
-}
 
+ToneControl::ToneAlgorithm::ToneAlgorithm(): color1(10), color2(11), color3(12)
+{
+    std::cout << "ToneAlgorithm constructing with upper limit: " <<  upperLimit << "and lower limit: " << lowerLimit <<std::endl;
+}
 
 void ToneControl::ToneAlgorithm::setToneColors(int c1, int c2, int c3)
 {
@@ -317,6 +418,48 @@ bool ToneControl::autoAdjust()
 {
     return true;
 }
+ToneControl::~ToneControl()
+{
+    std::cout <<"ToneControl destructor" << std::endl;
+}
+ToneControl::ToneAlgorithm::~ToneAlgorithm()
+{
+    std::cout << "ToneAlgorithm destructing" << std::endl;
+}
+
+void ToneControl::ToneAlgorithm::incrementAndSetColors(int color11, int color22, int color33)
+{
+    setToneColors(color11, color22, color33);
+    std::cout << "before a while" << toIncrement;
+    while(toIncrement < 10)
+    {
+        setToneColors(color11 + toIncrement, color22 + toIncrement, color33 + toIncrement);
+        //do nothing
+        std::cout << "doing nothing but this" << std::endl;
+        ++toIncrement;
+    }
+    std::cout << "after a while" << toIncrement;            
+}
+
+void ToneControl::changeToneAlgorithm()
+{
+    if(toneAlgoType == 'A')
+    {
+        toneAlgorithms.incrementAndSetColors(30,40,50);
+        toneAlgoType = 'B';
+    }
+    else
+    {
+        toneAlgoType = 'A';
+        toneAlgorithms.incrementAndSetColors(20,30,52);
+    }        
+}
+
+void ToneControl::useToneAlgorithm()
+{
+    changeToneAlgorithm();
+}
+
 /*
  new UDT 4: MusicMachine
  with 2 member functions
@@ -372,6 +515,7 @@ void MusicMachine::endComputing(Computer computerA)
 struct Classroom
 {
     Teacher teacher;
+    std::string classroomName;
 
     Classroom();
     ~Classroom();
@@ -381,9 +525,9 @@ struct Classroom
     void chooseClassPresident(std::string nameOfPresident);
 };
 
-Classroom::Classroom()
+Classroom::Classroom() : classroomName("default name")
 {
-    std::cout << " Constructing Classroom " << std::endl;
+    std::cout << " Constructing Classroom named:" << this->classroomName << std::endl;
 }
 Classroom::~Classroom()
 {   
