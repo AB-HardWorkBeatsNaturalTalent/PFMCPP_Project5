@@ -281,6 +281,7 @@ struct Teacher
     //3) assign homework
     void assignHomework(std::string homeworkAssignment);//input a string representation of the homework
 
+    void printStudentsRating();
     void sayMeaninglessNumbers(int startingWith);
 };
 
@@ -320,6 +321,10 @@ void Teacher::sayMeaninglessNumbers(int startingWith)
         return;
     }
     std::cout << "i have only taught 1 thing" << std::endl;        
+}
+void Teacher::printStudentsRating()
+{
+    std::cout << "the students rate you: " << this->ratingByStudents << std::endl;
 }
 /*
  copied UDT 3: ToneControl
@@ -585,6 +590,7 @@ int main()
     std::cout << "cuda info: " << computerGraphicsAccelerator.outputCUDAVersionAndCores() << std::endl;
 
     std::cout << "max sli capability: " << computerGraphicsAccelerator.maxSLICapability << std::endl;
+    computerGraphicsAccelerator.printMaxSLI();
 
 //Computer methods
     auto computer = Computer("doopy");
@@ -593,6 +599,7 @@ int main()
     computer.runMultipleProcesses();
 
     std::cout << computer.memoryInGB << " GB of RAM in this model" << std::endl;
+    computer.printMemInGB();
 
 //Teacher methods
     auto teacher = Teacher();
@@ -601,6 +608,7 @@ int main()
     std::cout << "money made: " << teacher.privateTutoring(50.00f) << std::endl;
 
     std::cout << "the students rate you: " << teacher.ratingByStudents << std::endl;
+    teacher.printStudentsRating();
 
 //ToneControl methods
     auto toneControl = ToneControl("boopy");  
