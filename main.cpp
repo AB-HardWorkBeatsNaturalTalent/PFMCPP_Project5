@@ -72,7 +72,7 @@ write 3 UDTs below that EACH have:
  */
 #include <iostream>
 /*
- copied UDT 1:Compputer
+ copied UDT 1:Computer
  */
 
 /*
