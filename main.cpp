@@ -117,8 +117,9 @@ struct Computer
     std::string motherboardType;
     //5) audio interface name (std::string)
     std::string audioInterfaceName;
+    std::string computerName;
 
-    Computer();
+    Computer(std::string pcName);
     //1) run multiple processes 
     void runMultipleProcesses();
     //2) run memtest
@@ -133,7 +134,7 @@ struct Computer
     std::string memoryTopologyBlocksPerCore();
 
 };
-Computer::Computer() : numberOfProcessorCores(5), memoryInGB(32), motherboardType("micro ATX"), audioInterfaceName("ableton")
+Computer::Computer(std::string pcName) : computerName(), numberOfProcessorCores(5), memoryInGB(32), motherboardType("micro ATX"), audioInterfaceName("ableton")
 {
     std::cout << "Computer being constructed" << std::endl; 
 }
@@ -349,6 +350,7 @@ struct ToneControl
     std::string knobMaterial = "plastic";
     //5) is smooth to turn (bool)
     bool isSmoothToTurn = true;
+    std::string tcName;
 
     ToneAlgorithm toneAlgorithms;
     char toneAlgoType = 'A';
@@ -356,7 +358,7 @@ struct ToneControl
     void changeToneAlgorithm();
 
 
-    ToneControl();
+    ToneControl(std::string tcName);
     //1) set tone level
     float setToneLevel(float inputLevel, float adjustment); //apply adjustment to the inputlevel and return the adjusted tone level
     //2) require repair
@@ -367,7 +369,7 @@ struct ToneControl
     void useToneAlgorithm();
 };
 
-ToneControl::ToneControl() 
+ToneControl::ToneControl(std::string tcName) : tcName(tcName)
 {
     std::cout << "ToneControl being constructed" << std::endl;
 }
@@ -457,8 +459,8 @@ void ToneControl::useToneAlgorithm()
  */
 struct MusicMachine
 {
-    Computer computer = Computer(); FIXME: you don't need to write `= Ctor();` with these types.
-    ToneControl toneControl = ToneControl(); FIXME: you don't need to write `= Ctor();` with these types.
+    Computer computer = Computer("constructor computer");
+    ToneControl toneControl = ToneControl("toneMaster construct");
 
     MusicMachine();
     ~MusicMachine();
@@ -567,7 +569,7 @@ int main()
     std::cout << "cuda info: " << computerGraphicsAccelerator.outputCUDAVersionAndCores() << std::endl;
 
 //Computer methods
-    auto computer = Computer();
+    auto computer = Computer("doopy");
     std::cout << "updated graphics: " << computer.updateGraphicsDriver(computerGraphicsAccelerator) << std::endl;
     computer.runMemtest();
     computer.runMultipleProcesses();
@@ -579,7 +581,7 @@ int main()
     std::cout << "money made: " << teacher.privateTutoring(50.00f) << std::endl;
 
 //ToneControl methods
-    auto toneControl = ToneControl();  
+    auto toneControl = ToneControl("boopy");  
     toneControl.setToneLevel(3.9f, 2.0f);
     toneControl.requireRepair();
     std::cout << "auto adjusted tone: "  << toneControl.autoAdjust() << std::endl;
