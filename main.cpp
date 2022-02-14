@@ -605,7 +605,7 @@ int main()
     toneAlgorithm.setToneColors(1, 2, 3);
     std::cout << "lower limit set to:" << toneAlgorithm.setLowerLimit(.02f) << std::endl;
 
-    
+    std::cout << "second color parameter: " << toneAlgorithm.color2 << std::endl;
 
 //MusicMachine methods
     auto musicMachine = MusicMachine();
@@ -614,11 +614,16 @@ int main()
     musicMachine.powerOffComputer(computer);
     musicMachine.endComputing(computer);
 
+    std::cout << "music machine computer name is: " << musicMachine.computer.computerName << ". The tone control knob material is: " << musicMachine.toneControl.knobMaterial << std::endl;
+
 //Classroom methods
     auto classroom = Classroom();
     classroom.hireTeacher(teacher);
     classroom.fireTeacher();
     classroom.chooseClassPresident("juanita");
 
+    std::cout << "the classroom name is: " << classroom.classroomName << std::endl;
+    
     std::cout << "good to go!" << std::endl;
+    
 }
