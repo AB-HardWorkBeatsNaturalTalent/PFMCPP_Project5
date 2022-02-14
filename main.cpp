@@ -171,11 +171,11 @@ bool Computer::updateGraphicsDriver(GraphicsAccelerator gA)
 
 Computer::~Computer()
 {
-    std::cout <<"Computer destructor" << std::endl;
+    std::cout << "Computer destructor" << std::endl;
 }
 Computer::GraphicsAccelerator::~GraphicsAccelerator()
 {
-    std::cout <<"GraphicsAccelerator destructor" << std::endl;
+    std::cout << "GraphicsAccelerator destructor" << std::endl;
 }
 void Computer::GraphicsAccelerator::boostTheGraphics(int multiply)
 {
