@@ -119,7 +119,6 @@ struct Computer
     std::string audioInterfaceName;
 
     Computer();
-    ~Computer();
     //1) run multiple processes 
     void runMultipleProcesses();
     //2) run memtest
@@ -169,10 +168,6 @@ bool Computer::updateGraphicsDriver(GraphicsAccelerator gA)
     return true;
 }
 
-Computer::~Computer()
-{
-    std::cout << "Computer destructor" << std::endl;
-}
 Computer::GraphicsAccelerator::~GraphicsAccelerator()
 {
     std::cout << "GraphicsAccelerator destructor" << std::endl;
@@ -362,7 +357,6 @@ struct ToneControl
 
 
     ToneControl();
-    ~ToneControl();
     //1) set tone level
     float setToneLevel(float inputLevel, float adjustment); //apply adjustment to the inputlevel and return the adjusted tone level
     //2) require repair
@@ -418,10 +412,7 @@ bool ToneControl::autoAdjust()
 {
     return true;
 }
-ToneControl::~ToneControl()
-{
-    std::cout <<"ToneControl destructor" << std::endl;
-}
+
 ToneControl::ToneAlgorithm::~ToneAlgorithm()
 {
     std::cout << "ToneAlgorithm destructing" << std::endl;
@@ -485,7 +476,7 @@ MusicMachine::MusicMachine()
 MusicMachine::~MusicMachine()
 {
     std::cout << "ending computing" << std::endl;
-    this->endComputing(this->computer);
+    endComputing(computer);
     std::cout << "MusicMachine destructed " << std::endl;
 }
 void MusicMachine::powerOnComputer(Computer comp)
@@ -527,7 +518,7 @@ struct Classroom
 
 Classroom::Classroom() : classroomName("default name")
 {
-    std::cout << " Constructing Classroom named:" << this->classroomName << std::endl;
+    std::cout << " Constructing Classroom named:" << classroomName << std::endl;
 }
 Classroom::~Classroom()
 {   
