@@ -457,8 +457,8 @@ void ToneControl::useToneAlgorithm()
  */
 struct MusicMachine
 {
-    Computer computer = Computer();
-    ToneControl toneControl = ToneControl();
+    Computer computer = Computer(); FIXME: you don't need to write `= Ctor();` with these types.
+    ToneControl toneControl = ToneControl(); FIXME: you don't need to write `= Ctor();` with these types.
 
     MusicMachine();
     ~MusicMachine();
