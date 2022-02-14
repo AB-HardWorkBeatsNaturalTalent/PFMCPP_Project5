@@ -512,7 +512,13 @@ struct MusicMachine
     void adjustToneControl(ToneControl toneControl1);
     void powerOffComputer(Computer computer1);
     void endComputing(Computer computer);
+    void printComputerNameAndKnobMaterial();
 };
+
+void MusicMachine::printComputerNameAndKnobMaterial()
+{
+    std::cout << "music machine computer name is: " << this->computer.computerName << ". The tone control knob material is: " << this->toneControl.knobMaterial << std::endl;
+}
 
 MusicMachine::MusicMachine()
 {
@@ -559,8 +565,13 @@ struct Classroom
     void hireTeacher(Teacher teach);
     void fireTeacher();
     void chooseClassPresident(std::string nameOfPresident);
+    void printClassroomName();
 };
 
+void Classroom::printClassroomName()
+{
+    std::cout << "the classroom name is: " << this->classroomName << std::endl;
+}
 Classroom::Classroom() : classroomName("default name")
 {
     std::cout << "Constructing Classroom named:" << classroomName << std::endl;
