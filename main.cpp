@@ -518,7 +518,7 @@ struct Classroom
 
 Classroom::Classroom() : classroomName("default name")
 {
-    std::cout << " Constructing Classroom named:" << classroomName << std::endl;
+    std::cout << "Constructing Classroom named:" << classroomName << std::endl;
 }
 Classroom::~Classroom()
 {   
