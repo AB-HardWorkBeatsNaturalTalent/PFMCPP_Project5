@@ -358,6 +358,9 @@ struct ToneControl
         int toIncrement = 0;
 
         void incrementAndSetColors(int color11, int color22, int color33);
+
+        void printLowerLimit();
+        void printSecondColor();
     };
     
 
@@ -388,8 +391,27 @@ struct ToneControl
     bool autoAdjust();//returns true if autoAdjust is turned on; else false 
 
     void useToneAlgorithm();
+
+    void printAutoAdjust();
+    void printKnobColor();
 };
 
+void ToneControl::ToneAlgorithm::printLowerLimit()
+{
+    std::cout << "lower limit set to:" << this->setLowerLimit(.02f) << std::endl;
+}
+void ToneControl::ToneAlgorithm::printSecondColor()
+{
+    std::cout << "second color parameter: " << this->color2 << std::endl;
+}
+void ToneControl::printKnobColor()
+{
+    std::cout << "knob color is " << this->knobColor << std::endl;
+}
+void ToneControl::printAutoAdjust()
+{
+    std::cout << "auto adjusted tone: "  << this->autoAdjust() << std::endl;
+}
 ToneControl::ToneControl(std::string toneControlName) : tcName(toneControlName)
 {
     std::cout << "ToneControl being constructed" << std::endl;
