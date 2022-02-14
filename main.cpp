@@ -298,7 +298,7 @@ void Teacher::sayMeaninglessNumbers(int startingWith)
     {        
         int numberOfStuff = numberOfClassesTaught * startingWith;
         std::cout << "I have taught " << numberOfStuff << "things" << std::endl;
-        std::cout << "that is " ;
+        std::cout << "that is ";
         while(startingWith > 0)
         {
             --startingWith;
