@@ -615,16 +615,18 @@ int main()
     toneControl.setToneLevel(3.9f, 2.0f);
     toneControl.requireRepair();
     std::cout << "auto adjusted tone: "  << toneControl.autoAdjust() << std::endl;
-
+    toneControl.printAutoAdjust();
     std::cout << "knob color is " << toneControl.knobColor << std::endl;
+    toneControl.printKnobColor();
 
 //ToneAlgorithm methods
     auto toneAlgorithm = ToneControl::ToneAlgorithm();
     toneAlgorithm.setUpperLimit(1.09f);
     toneAlgorithm.setToneColors(1, 2, 3);
     std::cout << "lower limit set to:" << toneAlgorithm.setLowerLimit(.02f) << std::endl;
-
+    toneAlgorithm.printLowerLimit();
     std::cout << "second color parameter: " << toneAlgorithm.color2 << std::endl;
+    toneAlgorithm.printSecondColor();
 
 //MusicMachine methods
     auto musicMachine = MusicMachine();
@@ -634,6 +636,7 @@ int main()
     musicMachine.endComputing(computer);
 
     std::cout << "music machine computer name is: " << musicMachine.computer.computerName << ". The tone control knob material is: " << musicMachine.toneControl.knobMaterial << std::endl;
+    musicMachine.printComputerNameAndKnobMaterial();
 
 //Classroom methods
     auto classroom = Classroom();
@@ -642,6 +645,7 @@ int main()
     classroom.chooseClassPresident("juanita");
 
     std::cout << "the classroom name is: " << classroom.classroomName << std::endl;
+    classroom.printClassroomName();
     
     std::cout << "good to go!" << std::endl;
     
