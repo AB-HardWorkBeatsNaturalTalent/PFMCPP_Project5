@@ -136,9 +136,9 @@ struct Computer
     bool updateGraphicsDriver(GraphicsAccelerator graphicsAccelerator);
     //input the graphics accelerator to update drivers for
     //returns true if driver updated successfully;
-
     double analyzeEnergyConsumption(int numberOfSecondsPoweredOn);
     std::string memoryTopologyBlocksPerCore();
+    void printMemInGB();
 
 };
 Computer::Computer(std::string pcName) : numberOfProcessorCores(5),  memoryInGB(32), motherboardType("micro ATX"), audioInterfaceName("ableton"), computerName(pcName)
@@ -179,6 +179,10 @@ bool Computer::updateGraphicsDriver(GraphicsAccelerator gA)
 {
     std::string throwAway = gA.outputCUDAVersionAndCores();  
     return true;
+}
+void Computer::printMemInGB()
+{
+    std::cout << this->memoryInGB << " GB of RAM in this model" << std::endl;
 }
 
 Computer::GraphicsAccelerator::~GraphicsAccelerator()
