@@ -107,6 +107,8 @@ struct Computer
         //output cuda version and number of cores
         std::string outputCUDAVersionAndCores();//returns a string representing the cuda capbility 
 
+        void printMaxSLI();
+
         void boostTheGraphics(int toMultiply);
         int parallelSpeedIncreaseFactor(int desiredFactor);
         
@@ -158,6 +160,11 @@ bool Computer::GraphicsAccelerator::setPrice([[maybe_unused]]float toPrice)
 std::string Computer::GraphicsAccelerator::outputCUDAVersionAndCores()
 {
     return "hello world";
+}
+
+void Computer::GraphicsAccelerator::printMaxSLI()
+{        
+    std::cout << "max sli capability: " << this->maxSLICapability << std::endl;
 }
 
 void Computer::runMultipleProcesses()
