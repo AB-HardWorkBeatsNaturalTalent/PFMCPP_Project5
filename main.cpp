@@ -258,7 +258,7 @@ struct Teacher
     //4) years of tenure (float)
     float yearsOfTenure = 1;
     //5) rating by students (char)
-    char ratingByStudents  = 'A';
+    char ratingByStudents  = 'F';
 
     Teacher();
     ~Teacher();
@@ -573,11 +573,15 @@ int main()
 
     std::cout << "cuda info: " << computerGraphicsAccelerator.outputCUDAVersionAndCores() << std::endl;
 
+    std::cout << "max sli capability: " << computerGraphicsAccelerator.maxSLICapability << std::endl;
+
 //Computer methods
     auto computer = Computer("doopy");
     std::cout << "updated graphics: " << computer.updateGraphicsDriver(computerGraphicsAccelerator) << std::endl;
     computer.runMemtest();
     computer.runMultipleProcesses();
+
+    std::cout << computer.memoryInGB << " GB of RAM in this model" << std::endl;
 
 //Teacher methods
     auto teacher = Teacher();
@@ -585,17 +589,23 @@ int main()
     teacher.giveLecture();    
     std::cout << "money made: " << teacher.privateTutoring(50.00f) << std::endl;
 
+    std::cout << "the students rate you: " << teacher.ratingByStudents << std::endl;
+
 //ToneControl methods
     auto toneControl = ToneControl("boopy");  
     toneControl.setToneLevel(3.9f, 2.0f);
     toneControl.requireRepair();
     std::cout << "auto adjusted tone: "  << toneControl.autoAdjust() << std::endl;
 
+    std::cout << "knob color is " << toneControl.knobColor << std::endl;
+
 //ToneAlgorithm methods
     auto toneAlgorithm = ToneControl::ToneAlgorithm();
     toneAlgorithm.setUpperLimit(1.09f);
     toneAlgorithm.setToneColors(1, 2, 3);
     std::cout << "lower limit set to:" << toneAlgorithm.setLowerLimit(.02f) << std::endl;
+
+    
 
 //MusicMachine methods
     auto musicMachine = MusicMachine();
