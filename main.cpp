@@ -134,7 +134,7 @@ struct Computer
     std::string memoryTopologyBlocksPerCore();
 
 };
-Computer::Computer(std::string pcName) : computerName(), numberOfProcessorCores(5), memoryInGB(32), motherboardType("micro ATX"), audioInterfaceName("ableton")
+Computer::Computer(std::string pcName) : numberOfProcessorCores(5),  memoryInGB(32), motherboardType("micro ATX"), audioInterfaceName("ableton"), computerName(pcName)
 {
     std::cout << "Computer being constructed" << std::endl; 
 }
@@ -369,7 +369,7 @@ struct ToneControl
     void useToneAlgorithm();
 };
 
-ToneControl::ToneControl(std::string tcName) : tcName(tcName)
+ToneControl::ToneControl(std::string toneControlName) : tcName(toneControlName)
 {
     std::cout << "ToneControl being constructed" << std::endl;
 }
