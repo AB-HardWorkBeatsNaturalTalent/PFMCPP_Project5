@@ -196,8 +196,8 @@ int Computer::GraphicsAccelerator::parallelSpeedIncreaseFactor(int desiredFactor
     int totalCoresProcessing = 0;
     for(int i = 0; i <= maxSLICapability; ++i)
     {
-        std::cout << "boosted processor core block i: " << i*desiredFactor << std::endl;
-        totalCoresProcessing += i*desiredFactor;
+        std::cout << "boosted processor core block i: " << i * desiredFactor << std::endl;
+        totalCoresProcessing += i * desiredFactor;
         if(i == 6) break;
     }
     std::cout << "more money more problems solved" << std::endl;
