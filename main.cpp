@@ -107,6 +107,8 @@ struct Computer
         //output cuda version and number of cores
         std::string outputCUDAVersionAndCores();//returns a string representing the cuda capbility 
 
+        void printMaxSLI();
+
         void boostTheGraphics(int toMultiply);
         int parallelSpeedIncreaseFactor(int desiredFactor);
         
@@ -134,9 +136,9 @@ struct Computer
     bool updateGraphicsDriver(GraphicsAccelerator graphicsAccelerator);
     //input the graphics accelerator to update drivers for
     //returns true if driver updated successfully;
-
     double analyzeEnergyConsumption(int numberOfSecondsPoweredOn);
     std::string memoryTopologyBlocksPerCore();
+    void printMemInGB();
 
 };
 Computer::Computer(std::string pcName) : numberOfProcessorCores(5),  memoryInGB(32), motherboardType("micro ATX"), audioInterfaceName("ableton"), computerName(pcName)
@@ -160,6 +162,11 @@ std::string Computer::GraphicsAccelerator::outputCUDAVersionAndCores()
     return "hello world";
 }
 
+void Computer::GraphicsAccelerator::printMaxSLI()
+{        
+    std::cout << "max sli capability: " << this->maxSLICapability << std::endl;
+}
+
 void Computer::runMultipleProcesses()
 {
     //imagine running in parallel
@@ -172,6 +179,10 @@ bool Computer::updateGraphicsDriver(GraphicsAccelerator gA)
 {
     std::string throwAway = gA.outputCUDAVersionAndCores();  
     return true;
+}
+void Computer::printMemInGB()
+{
+    std::cout << this->memoryInGB << " GB of RAM in this model" << std::endl;
 }
 
 Computer::GraphicsAccelerator::~GraphicsAccelerator()
@@ -258,7 +269,7 @@ struct Teacher
     //4) years of tenure (float)
     float yearsOfTenure = 1;
     //5) rating by students (char)
-    char ratingByStudents  = 'A';
+    char ratingByStudents  = 'F';
 
     Teacher();
     ~Teacher();
@@ -270,6 +281,7 @@ struct Teacher
     //3) assign homework
     void assignHomework(std::string homeworkAssignment);//input a string representation of the homework
 
+    void printStudentsRating();
     void sayMeaninglessNumbers(int startingWith);
 };
 
@@ -310,6 +322,10 @@ void Teacher::sayMeaninglessNumbers(int startingWith)
     }
     std::cout << "i have only taught 1 thing" << std::endl;        
 }
+void Teacher::printStudentsRating()
+{
+    std::cout << "the students rate you: " << this->ratingByStudents << std::endl;
+}
 /*
  copied UDT 3: ToneControl
  */
@@ -342,6 +358,9 @@ struct ToneControl
         int toIncrement = 0;
 
         void incrementAndSetColors(int color11, int color22, int color33);
+
+        void printLowerLimit();
+        void printSecondColor();
     };
     
 
@@ -372,8 +391,27 @@ struct ToneControl
     bool autoAdjust();//returns true if autoAdjust is turned on; else false 
 
     void useToneAlgorithm();
+
+    void printAutoAdjust();
+    void printKnobColor();
 };
 
+void ToneControl::ToneAlgorithm::printLowerLimit()
+{
+    std::cout << "lower limit set to:" << this->setLowerLimit(.02f) << std::endl;
+}
+void ToneControl::ToneAlgorithm::printSecondColor()
+{
+    std::cout << "second color parameter: " << this->color2 << std::endl;
+}
+void ToneControl::printKnobColor()
+{
+    std::cout << "knob color is " << this->knobColor << std::endl;
+}
+void ToneControl::printAutoAdjust()
+{
+    std::cout << "auto adjusted tone: "  << this->autoAdjust() << std::endl;
+}
 ToneControl::ToneControl(std::string toneControlName) : tcName(toneControlName)
 {
     std::cout << "ToneControl being constructed" << std::endl;
@@ -474,7 +512,13 @@ struct MusicMachine
     void adjustToneControl(ToneControl toneControl1);
     void powerOffComputer(Computer computer1);
     void endComputing(Computer computer);
+    void printComputerNameAndKnobMaterial();
 };
+
+void MusicMachine::printComputerNameAndKnobMaterial()
+{
+    std::cout << "music machine computer name is: " << this->computer.computerName << ". The tone control knob material is: " << this->toneControl.knobMaterial << std::endl;
+}
 
 MusicMachine::MusicMachine()
 {
@@ -521,8 +565,13 @@ struct Classroom
     void hireTeacher(Teacher teach);
     void fireTeacher();
     void chooseClassPresident(std::string nameOfPresident);
+    void printClassroomName();
 };
 
+void Classroom::printClassroomName()
+{
+    std::cout << "the classroom name is: " << this->classroomName << std::endl;
+}
 Classroom::Classroom() : classroomName("default name")
 {
     std::cout << "Constructing Classroom named:" << classroomName << std::endl;
@@ -573,11 +622,17 @@ int main()
 
     std::cout << "cuda info: " << computerGraphicsAccelerator.outputCUDAVersionAndCores() << std::endl;
 
+    std::cout << "max sli capability: " << computerGraphicsAccelerator.maxSLICapability << std::endl;
+    computerGraphicsAccelerator.printMaxSLI();
+
 //Computer methods
     auto computer = Computer("doopy");
     std::cout << "updated graphics: " << computer.updateGraphicsDriver(computerGraphicsAccelerator) << std::endl;
     computer.runMemtest();
     computer.runMultipleProcesses();
+
+    std::cout << computer.memoryInGB << " GB of RAM in this model" << std::endl;
+    computer.printMemInGB();
 
 //Teacher methods
     auto teacher = Teacher();
@@ -585,17 +640,26 @@ int main()
     teacher.giveLecture();    
     std::cout << "money made: " << teacher.privateTutoring(50.00f) << std::endl;
 
+    std::cout << "the students rate you: " << teacher.ratingByStudents << std::endl;
+    teacher.printStudentsRating();
+
 //ToneControl methods
     auto toneControl = ToneControl("boopy");  
     toneControl.setToneLevel(3.9f, 2.0f);
     toneControl.requireRepair();
     std::cout << "auto adjusted tone: "  << toneControl.autoAdjust() << std::endl;
+    toneControl.printAutoAdjust();
+    std::cout << "knob color is " << toneControl.knobColor << std::endl;
+    toneControl.printKnobColor();
 
 //ToneAlgorithm methods
     auto toneAlgorithm = ToneControl::ToneAlgorithm();
     toneAlgorithm.setUpperLimit(1.09f);
     toneAlgorithm.setToneColors(1, 2, 3);
     std::cout << "lower limit set to:" << toneAlgorithm.setLowerLimit(.02f) << std::endl;
+    toneAlgorithm.printLowerLimit();
+    std::cout << "second color parameter: " << toneAlgorithm.color2 << std::endl;
+    toneAlgorithm.printSecondColor();
 
 //MusicMachine methods
     auto musicMachine = MusicMachine();
@@ -604,11 +668,18 @@ int main()
     musicMachine.powerOffComputer(computer);
     musicMachine.endComputing(computer);
 
+    std::cout << "music machine computer name is: " << musicMachine.computer.computerName << ". The tone control knob material is: " << musicMachine.toneControl.knobMaterial << std::endl;
+    musicMachine.printComputerNameAndKnobMaterial();
+
 //Classroom methods
     auto classroom = Classroom();
     classroom.hireTeacher(teacher);
     classroom.fireTeacher();
     classroom.chooseClassPresident("juanita");
 
+    std::cout << "the classroom name is: " << classroom.classroomName << std::endl;
+    classroom.printClassroomName();
+    
     std::cout << "good to go!" << std::endl;
+    
 }
