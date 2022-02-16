@@ -68,16 +68,9 @@ void someMemberFunction(const Axe& axe);
  Clear any warnings about exit-time-destructors.
  Suppress them by adding -Wno-exit-time-destructors to the .replit file with the other warning suppression flags
  */
-
-
-
-
-#include <iostream>
 /*
  copied UDT 1:Computer
  */
-
-
 /*
 Thing 1) Computer
  */
