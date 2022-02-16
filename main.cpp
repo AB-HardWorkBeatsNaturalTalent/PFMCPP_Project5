@@ -77,6 +77,7 @@ void someMemberFunction(const Axe& axe);
  copied UDT 1:Computer
  */
 
+
 /*
 Thing 1) Computer
  */
@@ -108,7 +109,6 @@ struct Computer
 
         void boostTheGraphics(int toMultiply);
         int parallelSpeedIncreaseFactor(int desiredFactor);
-        JUCE_LEAK_DETECTOR(GraphicsAccelerator)
     };
 
     //1) number of processor cores (int)
@@ -130,7 +130,7 @@ struct Computer
     void runMemtest();
     //3) update Graphics Driver
     //return true on connection success
-    bool updateGraphicsDriver(GraphicsAccelerator graphicsAccelerator);
+    bool updateGraphicsDriver(GraphicsAccelerator& graphicsAccelerator);
     //input the graphics accelerator to update drivers for
     //returns true if driver updated successfully;
     double analyzeEnergyConsumption(int numberOfSecondsPoweredOn);
@@ -172,7 +172,7 @@ void Computer::runMemtest()
 {    
     std::cout << "memtest running on " << memoryInGB << "GB" << std::endl;
 }
-bool Computer::updateGraphicsDriver(GraphicsAccelerator gA)
+bool Computer::updateGraphicsDriver(GraphicsAccelerator& gA)
 {
     std::string throwAway = gA.outputCUDAVersionAndCores();  
     return true;
@@ -250,6 +250,15 @@ std::string Computer::memoryTopologyBlocksPerCore()
     }
     return memoryTopology;
 }
+struct ComputerWrapper
+{
+    ComputerWrapper( Computer* ptr ) : ptrToComputer( ptr ) { }
+    ~ComputerWrapper() 
+    {
+        delete ptrToComputer;
+    }
+    Computer* ptrToComputer = nullptr;
+};
 
 /*
  copied UDT 2: Teacher
@@ -324,6 +333,18 @@ void Teacher::printStudentsRating()
 {
     std::cout << "the students rate you: " << this->ratingByStudents << std::endl;
 }
+
+
+
+struct TeacherWrapper
+{
+    TeacherWrapper( Teacher* ptr ) : ptrToTeacher(ptr) { }
+    ~TeacherWrapper()
+    {
+        delete ptrToTeacher;
+    }
+    Teacher* ptrToTeacher = nullptr;
+};
 /*
  copied UDT 3: ToneControl
  */
@@ -359,7 +380,6 @@ struct ToneControl
 
         void printLowerLimit();
         void printSecondColor();
-        JUCE_LEAK_DETECTOR(ToneAlgorithm)
     };
     
 
@@ -495,6 +515,16 @@ void ToneControl::useToneAlgorithm()
 {
     changeToneAlgorithm();
 }
+struct ToneControlWrapper
+{
+    ToneControlWrapper( ToneControl* ptr ) : ptrToToneControl(ptr) { }
+    ~ToneControlWrapper()
+    {
+        delete ptrToToneControl;
+    }
+    ToneControl* ptrToToneControl = nullptr;
+};
+
 
 /*
  new UDT 4: MusicMachine
@@ -508,10 +538,10 @@ struct MusicMachine
     MusicMachine();
     ~MusicMachine();
 
-    void powerOnComputer(Computer computer1);
-    void adjustToneControl(ToneControl toneControl1);
-    void powerOffComputer(Computer computer1);
-    void endComputing(Computer computer);
+    void powerOnComputer( Computer& computer1 );
+    void adjustToneControl( ToneControl& toneControl1 );
+    void powerOffComputer( Computer& computer1 );
+    void endComputing( Computer& computer );
     void printComputerNameAndKnobMaterial();
     JUCE_LEAK_DETECTOR(MusicMachine)
 };
@@ -531,26 +561,36 @@ MusicMachine::~MusicMachine()
     endComputing(computer);
     std::cout << "MusicMachine destructed " << std::endl;
 }
-void MusicMachine::powerOnComputer(Computer comp)
+void MusicMachine::powerOnComputer( Computer& comp )
 {
     comp.runMemtest();
     std::cout << "powering on" << std::endl;
 }
-void MusicMachine::adjustToneControl(ToneControl toneControl1)
+void MusicMachine::adjustToneControl(ToneControl& toneControl1)
 {
     toneControl1.autoAdjust();
 }
-void MusicMachine::powerOffComputer(Computer computer11)
+void MusicMachine::powerOffComputer(Computer& computer11)
 {    
     computer11.updateGraphicsDriver(computer11.graphicsAccelerator);
     std::cout << "updating graphics and powering off" << std::endl;
 }
-void MusicMachine::endComputing(Computer computerA)
+void MusicMachine::endComputing(Computer& computerA)
 {
     computerA.runMultipleProcesses();
     std::cout << "computing has ended on computer with" << computerA.motherboardType << " and " << computerA.memoryInGB << "GB of RAM" << std::endl;
 }
 
+
+struct MusicMachineWrapper
+{
+    MusicMachineWrapper( MusicMachine* ptr ) : ptrToMusicMachine(ptr) { }
+    ~MusicMachineWrapper()
+    {
+        delete ptrToMusicMachine;
+    }
+    MusicMachine* ptrToMusicMachine = nullptr;
+};
 /*
  new UDT 5:
  with 2 member functions
@@ -563,7 +603,7 @@ struct Classroom
     Classroom();
     ~Classroom();
 
-    void hireTeacher(Teacher teach);
+    void hireTeacher(Teacher& teach);
     void fireTeacher();
     void chooseClassPresident(std::string nameOfPresident);
     void printClassroomName();
@@ -584,7 +624,7 @@ Classroom::~Classroom()
     chooseClassPresident("billy");
     std::cout << "Classroom destructed" << std::endl;
 }
-void Classroom::hireTeacher(Teacher teacherToHire)
+void Classroom::hireTeacher(Teacher& teacherToHire)
 {
     teacherToHire.giveLecture();
     std::cout << "Welcome aboard" << std::endl;
@@ -597,6 +637,15 @@ void Classroom::chooseClassPresident(std::string nameOfPresident)
 {
     std::cout << "the new president is: " << nameOfPresident << std::endl;
 }
+struct ClassroomWrapper
+{
+    ClassroomWrapper( Classroom* ptr ) : ptrToClassroom(ptr) { }
+    ~ClassroomWrapper()
+    {
+        delete ptrToClassroom;
+    }
+    Classroom* ptrToClassroom = nullptr;
+};
 
 
 /*
@@ -628,31 +677,34 @@ int main()
     computerGraphicsAccelerator.printMaxSLI();
 
 //Computer methods
-    auto computer = Computer("doopy");
-    std::cout << "updated graphics: " << computer.updateGraphicsDriver(computerGraphicsAccelerator) << std::endl;
-    computer.runMemtest();
-    computer.runMultipleProcesses();
+    auto computer = ComputerWrapper( new Computer("doopy") );
+    
+    std::cout << "updated graphics: " << computer.ptrToComputer->updateGraphicsDriver(computerGraphicsAccelerator) << std::endl;
+    computer.ptrToComputer->runMemtest();
+    computer.ptrToComputer->runMultipleProcesses();
 
-    std::cout << computer.memoryInGB << " GB of RAM in this model" << std::endl;
-    computer.printMemInGB();
+    std::cout << computer.ptrToComputer->memoryInGB << " GB of RAM in this model" << std::endl;
+    computer.ptrToComputer->printMemInGB();
+
+    
 
 //Teacher methods
-    auto teacher = Teacher();
-    teacher.assignHomework("lesson 2");
-    teacher.giveLecture();    
-    std::cout << "money made: " << teacher.privateTutoring(50.00f) << std::endl;
+    auto teacher = TeacherWrapper( new Teacher() );
+    teacher.ptrToTeacher->assignHomework("lesson 2");
+    teacher.ptrToTeacher->giveLecture();    
+    std::cout << "money made: " << teacher.ptrToTeacher->privateTutoring(50.00f) << std::endl;
 
-    std::cout << "the students rate you: " << teacher.ratingByStudents << std::endl;
-    teacher.printStudentsRating();
+    std::cout << "the students rate you: " << teacher.ptrToTeacher->ratingByStudents << std::endl;
+    teacher.ptrToTeacher->printStudentsRating();
 
 //ToneControl methods
-    auto toneControl = ToneControl("boopy");  
-    toneControl.setToneLevel(3.9f, 2.0f);
-    toneControl.requireRepair();
-    std::cout << "auto adjusted tone: "  << toneControl.autoAdjust() << std::endl;
-    toneControl.printAutoAdjust();
-    std::cout << "knob color is " << toneControl.knobColor << std::endl;
-    toneControl.printKnobColor();
+    auto toneControl = ToneControlWrapper( new ToneControl("boopy") );  
+    toneControl.ptrToToneControl->setToneLevel(3.9f, 2.0f);
+    toneControl.ptrToToneControl->requireRepair();
+    std::cout << "auto adjusted tone: "  << toneControl.ptrToToneControl->autoAdjust() << std::endl;
+    toneControl.ptrToToneControl->printAutoAdjust();
+    std::cout << "knob color is " << toneControl.ptrToToneControl->knobColor << std::endl;
+    toneControl.ptrToToneControl->printKnobColor();
 
 //ToneAlgorithm methods
     auto toneAlgorithm = ToneControl::ToneAlgorithm();
@@ -664,23 +716,23 @@ int main()
     toneAlgorithm.printSecondColor();
 
 //MusicMachine methods
-    auto musicMachine = MusicMachine();
-    musicMachine.powerOnComputer(computer);
-    musicMachine.adjustToneControl(toneControl);
-    musicMachine.powerOffComputer(computer);
-    musicMachine.endComputing(computer);
+    auto musicMachine = MusicMachineWrapper( new MusicMachine() );
+    musicMachine.ptrToMusicMachine->powerOnComputer(*computer.ptrToComputer);
+    musicMachine.ptrToMusicMachine->adjustToneControl(*toneControl.ptrToToneControl);
+    musicMachine.ptrToMusicMachine->powerOffComputer(*computer.ptrToComputer);
+    musicMachine.ptrToMusicMachine->endComputing(*computer.ptrToComputer);
 
-    std::cout << "music machine computer name is: " << musicMachine.computer.computerName << ". The tone control knob material is: " << musicMachine.toneControl.knobMaterial << std::endl;
-    musicMachine.printComputerNameAndKnobMaterial();
+    std::cout << "music machine computer name is: " << musicMachine.ptrToMusicMachine->computer.computerName << ". The tone control knob material is: " << musicMachine.ptrToMusicMachine->toneControl.knobMaterial << std::endl;
+    musicMachine.ptrToMusicMachine->printComputerNameAndKnobMaterial();
 
 //Classroom methods
-    auto classroom = Classroom();
-    classroom.hireTeacher(teacher);
-    classroom.fireTeacher();
-    classroom.chooseClassPresident("juanita");
+    auto classroom = ClassroomWrapper( new Classroom() );
+    classroom.ptrToClassroom->hireTeacher(*teacher.ptrToTeacher);
+    classroom.ptrToClassroom->fireTeacher();
+    classroom.ptrToClassroom->chooseClassPresident("juanita");
 
-    std::cout << "the classroom name is: " << classroom.classroomName << std::endl;
-    classroom.printClassroomName();
+    std::cout << "the classroom name is: " << classroom.ptrToClassroom->classroomName << std::endl;
+    classroom.ptrToClassroom->printClassroomName();
     
     std::cout << "good to go!" << std::endl;
     
