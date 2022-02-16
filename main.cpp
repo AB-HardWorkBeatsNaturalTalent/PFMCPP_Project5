@@ -19,6 +19,8 @@ Create a branch named Part3
       
     This means if you had something like the following in your main() previously: 
 */
+#include "LeakedObjectDetector.h"
+
 #if false
  Axe axe;
  std::cout << "axe sharpness: " << axe.sharpness << "\n";
@@ -106,7 +108,7 @@ struct Computer
 
         void boostTheGraphics(int toMultiply);
         int parallelSpeedIncreaseFactor(int desiredFactor);
-        
+        JUCE_LEAK_DETECTOR(GraphicsAccelerator)
     };
 
     //1) number of processor cores (int)
@@ -134,7 +136,7 @@ struct Computer
     double analyzeEnergyConsumption(int numberOfSecondsPoweredOn);
     std::string memoryTopologyBlocksPerCore();
     void printMemInGB();
-
+    JUCE_LEAK_DETECTOR(Computer)
 };
 Computer::Computer(std::string pcName) : numberOfProcessorCores(5),  memoryInGB(32), motherboardType("micro ATX"), audioInterfaceName("ableton"), computerName(pcName)
 {
@@ -278,6 +280,7 @@ struct Teacher
 
     void printStudentsRating();
     void sayMeaninglessNumbers(int startingWith);
+    JUCE_LEAK_DETECTOR(Teacher)
 };
 
 Teacher::Teacher() : domainExpertise("philosophy")
@@ -356,6 +359,7 @@ struct ToneControl
 
         void printLowerLimit();
         void printSecondColor();
+        JUCE_LEAK_DETECTOR(ToneAlgorithm)
     };
     
 
@@ -389,6 +393,7 @@ struct ToneControl
 
     void printAutoAdjust();
     void printKnobColor();
+    JUCE_LEAK_DETECTOR(ToneControl)
 };
 
 void ToneControl::ToneAlgorithm::printLowerLimit()
@@ -508,6 +513,7 @@ struct MusicMachine
     void powerOffComputer(Computer computer1);
     void endComputing(Computer computer);
     void printComputerNameAndKnobMaterial();
+    JUCE_LEAK_DETECTOR(MusicMachine)
 };
 
 void MusicMachine::printComputerNameAndKnobMaterial()
@@ -561,6 +567,7 @@ struct Classroom
     void fireTeacher();
     void chooseClassPresident(std::string nameOfPresident);
     void printClassroomName();
+    JUCE_LEAK_DETECTOR(Classroom)
 };
 
 void Classroom::printClassroomName()
