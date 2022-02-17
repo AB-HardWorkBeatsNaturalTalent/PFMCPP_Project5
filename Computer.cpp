@@ -15,7 +15,7 @@ bool Computer::GraphicsAccelerator::setPrice([[maybe_unused]]float toPrice)
 {
     return false;
 }
-std::string Computer::GraphicsAccelerator::outputCUDAVersionAndCores()
+std::string Computer::GraphicsAccelerator::outputCUDAVersionAndCores() const
 {
     return "hello world";
 }
@@ -25,7 +25,7 @@ void Computer::GraphicsAccelerator::printMaxSLI()
     std::cout << "max sli capability: " << this->maxSLICapability << std::endl;
 }
 
-void Computer::runMultipleProcesses()
+void Computer::runMultipleProcesses() const
 {
     //imagine running in parallel
 }
@@ -33,7 +33,7 @@ void Computer::runMemtest() const
 {    
     std::cout << "memtest running on " << memoryInGB << "GB" << std::endl;
 }
-bool Computer::updateGraphicsDriver(GraphicsAccelerator& gA)
+bool Computer::updateGraphicsDriver(const GraphicsAccelerator& gA) const
 {
     std::string throwAway = gA.outputCUDAVersionAndCores();  
     return true;

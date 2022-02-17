@@ -10,10 +10,10 @@ struct MusicMachine
     MusicMachine();
     ~MusicMachine();
 
-    void powerOnComputer( const Computer& computer1 );
+    void powerOnComputer( const Computer& computer1 ) const;
     void adjustToneControl( ToneControl& toneControl1 );
-    void powerOffComputer( Computer& computer1 );
-    void endComputing( Computer& computer );
+    void powerOffComputer( const Computer& computer1 ) const;
+    void endComputing( const Computer& computer ) const;
     void printComputerNameAndKnobMaterial();
     JUCE_LEAK_DETECTOR(MusicMachine)
 };

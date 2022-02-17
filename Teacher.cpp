@@ -9,7 +9,7 @@ Teacher::~Teacher()
 {
     std::cout << "Teacher destructing" << std::endl;
 }
-void Teacher::giveLecture()
+void Teacher::giveLecture() const
 {
     std::cout << "class of " << domainExpertise <<std::endl;
 }

@@ -17,7 +17,7 @@ struct Teacher
     Teacher();
     ~Teacher();
     //1) give lecture
-    void giveLecture();
+    void giveLecture() const;
     //2) private tutoring
     // returns the amount of money made from private tutoring
     float privateTutoring(float hourlyRate, int numberOfHours = 1); //input hourly rate and number of hours

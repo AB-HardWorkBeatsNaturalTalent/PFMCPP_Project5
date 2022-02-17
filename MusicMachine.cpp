@@ -14,7 +14,7 @@ MusicMachine::~MusicMachine()
     endComputing(computer);
     std::cout << "MusicMachine destructed " << std::endl;
 }
-void MusicMachine::powerOnComputer( const Computer& comp )
+void MusicMachine::powerOnComputer( const Computer& comp ) const
 {
     comp.runMemtest();
     std::cout << "powering on" << std::endl;
@@ -23,12 +23,12 @@ void MusicMachine::adjustToneControl(ToneControl& toneControl1)
 {
     toneControl1.autoAdjust();
 }
-void MusicMachine::powerOffComputer(Computer& computer11)
+void MusicMachine::powerOffComputer(const Computer& computer11) const
 {    
     computer11.updateGraphicsDriver(computer11.graphicsAccelerator);
     std::cout << "updating graphics and powering off" << std::endl;
 }
-void MusicMachine::endComputing(Computer& computerA)
+void MusicMachine::endComputing(const Computer& computerA) const
 {
     computerA.runMultipleProcesses();
     std::cout << "computing has ended on computer with" << computerA.motherboardType << " and " << computerA.memoryInGB << "GB of RAM" << std::endl;

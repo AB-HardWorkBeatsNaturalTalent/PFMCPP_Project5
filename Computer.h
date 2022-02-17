@@ -22,7 +22,7 @@ struct Computer
         //set price of Graphics accelerator
         bool setPrice(float newPrice = 100.0f);
         //output cuda version and number of cores
-        std::string outputCUDAVersionAndCores();//returns a string representing the cuda capbility 
+        std::string outputCUDAVersionAndCores() const;//returns a string representing the cuda capbility 
 
         void printMaxSLI();
 
@@ -44,12 +44,12 @@ struct Computer
 
     Computer(std::string pcName);
     //1) run multiple processes 
-    void runMultipleProcesses();
+    void runMultipleProcesses() const;
     //2) run memtest
     void runMemtest() const;
     //3) update Graphics Driver
     //return true on connection success
-    bool updateGraphicsDriver(GraphicsAccelerator& graphicsAccelerator);
+    bool updateGraphicsDriver(const GraphicsAccelerator& graphicsAccelerator) const;
     //input the graphics accelerator to update drivers for
     //returns true if driver updated successfully;
     double analyzeEnergyConsumption(int numberOfSecondsPoweredOn);

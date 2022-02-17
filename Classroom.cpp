@@ -13,7 +13,7 @@ Classroom::~Classroom()
     chooseClassPresident("billy");
     std::cout << "Classroom destructed" << std::endl;
 }
-void Classroom::hireTeacher(Teacher& teacherToHire)
+void Classroom::hireTeacher(const Teacher& teacherToHire)
 {
     teacherToHire.giveLecture();
     std::cout << "Welcome aboard" << std::endl;

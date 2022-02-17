@@ -9,7 +9,7 @@ struct Classroom
     Classroom();
     ~Classroom();
 
-    void hireTeacher(Teacher& teach);
+    void hireTeacher(const Teacher& teach);// TODO: check if you can pass by const-ref
     void fireTeacher();
     void chooseClassPresident(std::string nameOfPresident);
     void printClassroomName();
