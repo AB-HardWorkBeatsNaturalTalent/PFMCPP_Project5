@@ -1,14 +1,14 @@
 #pragma once
-#include "MusicMachine.h"
+/*#include "MusicMachine.h"
 #include "Computer.h"
 #include "Teacher.h"
 #include "ToneControl.h"
-#include "Classroom.h"
-/*struct Computer;
+#include "Classroom.h"*/
+struct Computer;
 struct Teacher;
 struct ToneControl;
 struct Classroom;
-struct MusicMachine;*/
+struct MusicMachine;
 
 struct ComputerWrapper
 {   

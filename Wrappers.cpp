@@ -1,4 +1,9 @@
 #include "Wrappers.h"
+#include "Computer.h"
+#include "Teacher.h"
+#include "ToneControl.h"
+#include "Classroom.h"
+#include "MusicMachine.h"
 
 ComputerWrapper::ComputerWrapper( Computer* ptr ) : ptrToComputer( ptr ){}
 ComputerWrapper::~ComputerWrapper() 
