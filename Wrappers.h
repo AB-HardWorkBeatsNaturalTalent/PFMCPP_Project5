@@ -4,6 +4,11 @@
 #include "Teacher.h"
 #include "ToneControl.h"
 #include "Classroom.h"
+/*struct Computer;
+struct Teacher;
+struct ToneControl;
+struct Classroom;
+struct MusicMachine;*/
 
 struct ComputerWrapper
 {   
