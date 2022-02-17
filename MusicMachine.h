@@ -10,7 +10,7 @@ struct MusicMachine
     MusicMachine();
     ~MusicMachine();
 
-    void powerOnComputer( Computer& computer1 );
+    void powerOnComputer( const Computer& computer1 );
     void adjustToneControl( ToneControl& toneControl1 );
     void powerOffComputer( Computer& computer1 );
     void endComputing( Computer& computer );

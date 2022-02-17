@@ -14,7 +14,7 @@ MusicMachine::~MusicMachine()
     endComputing(computer);
     std::cout << "MusicMachine destructed " << std::endl;
 }
-void MusicMachine::powerOnComputer( Computer& comp )
+void MusicMachine::powerOnComputer( const Computer& comp )
 {
     comp.runMemtest();
     std::cout << "powering on" << std::endl;

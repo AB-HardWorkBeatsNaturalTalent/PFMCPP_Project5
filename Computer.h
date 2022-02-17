@@ -46,7 +46,7 @@ struct Computer
     //1) run multiple processes 
     void runMultipleProcesses();
     //2) run memtest
-    void runMemtest();
+    void runMemtest() const;
     //3) update Graphics Driver
     //return true on connection success
     bool updateGraphicsDriver(GraphicsAccelerator& graphicsAccelerator);

@@ -29,7 +29,7 @@ void Computer::runMultipleProcesses()
 {
     //imagine running in parallel
 }
-void Computer::runMemtest()
+void Computer::runMemtest() const
 {    
     std::cout << "memtest running on " << memoryInGB << "GB" << std::endl;
 }
